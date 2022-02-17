@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 985.17">
+    <defs>
+        <style>.a{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:80px;isolation:isolate}@media (prefers-color-scheme:dark){.a{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:80px;isolation:isolate}}</style>
+    </defs>
+    <path class="a" d="M112.17,433.54,458.41,609a116.91,116.91,0,0,0,105.68,0L910.27,433.54" transform="translate(-72 -19.42)" />
+    <path class="a" d="M113.9,776.49,460.14,952a116.91,116.91,0,0,0,105.68,0L912,776.49" transform="translate(-72 -19.42)" />
+    <path class="a" d="M113.13,606.26,459.37,781.73a116.91,116.91,0,0,0,105.68,0L911.23,606.26" transform="translate(-72 -19.42)" />
+    <path class="a" d="M112,254.68l373,189a57.64,57.64,0,0,0,52.14,0L710.56,355.8,511.05,254.68" transform="translate(-72 -19.42)" />
+    <path class="a" d="M112,254.68l373-189a57.64,57.64,0,0,1,52.14,0l173.47,87.91L511.05,254.68" transform="translate(-72 -19.42)" />
+    <path class="a" d="M909.78,254.68l-372.94,189a57.66,57.66,0,0,1-52.15,0" transform="translate(-72 -19.42)" />
+    <path class="a" d="M909.78,254.68l-372.94-189a57.66,57.66,0,0,0-52.15,0" transform="translate(-72 -19.42)" />
+</svg>
