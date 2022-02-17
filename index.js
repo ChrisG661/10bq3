@@ -311,12 +311,12 @@ function halamanSimpanganBaku() {
 
     // Menghitung angka penting
     var angkaPenting = 0;
-    if (ketidakpastian > 1) {
-      angkaPenting = 2;
+    if (ketidakpastian <= 0.1) {
+      angkaPenting = 4;
     } else if (ketidakpastian <= 1) {
       angkaPenting = 3;
-    } else if (ketidakpastian <= 0.1) {
-      angkaPenting = 4;
+    } else if (ketidakpastian > 1) {
+      angkaPenting = 2;
     }
 
     input.hasil.value = roundFloat(rata).toPrecision(angkaPenting); // Mengatur angka penting
@@ -324,7 +324,7 @@ function halamanSimpanganBaku() {
       .toPrecision(angkaPenting)
       .toString()
       .split(".");
-    desimalHasil = desimalHasil[1] ? desimalHasil.length : 0;
+    desimalHasil = desimalHasil[1] ? desimalHasil[1].length : 0;
     input.hasilKetidakpastian.value = roundFloat(
       simpanganBaku,
       desimalHasil
