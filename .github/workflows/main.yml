@@ -36,6 +36,11 @@ jobs:
           cp -r ./src/* ./dist
           rm ./dist/tailwind.css
 
+      - name: Include git hash
+        continue-on-error: true
+        run: |
+          git rev-parse --short "$GITHUB_SHA" > ./src/build_hash
+
       - name: TailwindCSS dependencies
         run: npm install -D tailwindcss
 
