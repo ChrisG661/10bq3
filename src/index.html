@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="tailwind.css" />
+    <script defer src="theme-switcher.js"></script>
+    <script src="flowbite.js"></script>
+    <script defer src="index.js"></script>
+    <script>
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <title>Formatif 1 Informatika</title>
+  </head>
+  <body>
+    <header
+      class="fixed top-0 left-0 right-0 flex flex-row items-center w-screen pt-2"
+      id="header"
+    >
+      <div class="flex flex-row pl-2 space-x-2 grow" id="selektor-halaman">
+        <button
+          class="block p-2 text-sm font-medium text-gray-500 rounded-lg dark:target:text-gray-300 target:text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+          id="kecepatan"
+          href="#percepatan"
+        >
+          Kecepatan
+        </button>
+        <button
+          class="block p-2 text-sm font-medium text-gray-500 rounded-lg dark:target:text-gray-300 dark:text-gray-400 target:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+          id="percepatan"
+          href="#percepatan"
+        >
+          Percepatan
+        </button>
+        <button
+          class="block p-2 text-sm font-medium text-gray-500 rounded-lg dark:target:text-gray-300 target:text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+          id="rata-rata"
+          href="#rata-rata"
+        >
+          Rata-rata
+        </button>
+        <button
+          class="block p-2 text-sm font-medium text-gray-500 rounded-lg dark:target:text-gray-300 target:text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+          id="simpangan-baku"
+          href="#simpangan-baku"
+        >
+          Simpangan baku
+        </button>
+        <script>
+          function switchContent(contentID) {
+            document
+              .querySelector(`.kalkulator>.${contentID}`)
+              .classList.remove("hidden");
+            document
+              .querySelectorAll(`.kalkulator>:not(.${contentID})`)
+              .forEach((e) => e.classList.add("hidden"));
+            window.location.hash = contentID;
+          }
+          document
+            .querySelectorAll("#selektor-halaman>button")
+            .forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                switchContent(btn.id);
+              });
+            });
+        </script>
+      </div>
+      <button
+        id="theme-toggle"
+        type="button"
+        class="p-2 mr-2 text-sm text-gray-500 rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+        title="Tema"
+      >
+        <svg
+          id="theme-toggle-dark-icon"
+          class="hidden w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+          ></path>
+        </svg>
+        <svg
+          id="theme-toggle-light-icon"
+          class="hidden w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+    </header>
+    <div class="w-screen h-screen bg-gray-100 dark:bg-gray-800">
+      <div class="flex items-center justify-center w-full h-full align-middle">
+        <div class="min-w-xs kalkulator">
+          <form class="hidden space-y-4 w-80 kecepatan">
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center pr-0"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Jarak
+              </span>
+              <input
+                class="flex-auto w-10 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="kecepatan-jarak"
+              />
+              <select
+                class="flex-initial py-0 pl-1 pr-1 text-sm text-gray-900 bg-transparent border-0 w-14 dark:placeholder-gray-400 dark:text-white bg-gray-50 dark:bg-gray-700 focus:ring-0 focus:border-blue-500"
+                id="kecepatan-jarak-satuan"
+                title="Satuan jarak"
+              >
+                <option>km</option>
+                <option>m</option>
+              </select>
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span
+                class="py-0 pr-4 text-sm text-gray-900 grow dark:text-gray-300"
+              >
+                Waktu
+              </span>
+              <input
+                class="flex-shrink w-10 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="kecepatan-waktu-jam"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                jam
+              </span>
+              <input
+                class="flex-shrink w-10 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="kecepatan-waktu-menit"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                menit
+              </span>
+              <input
+                class="flex-shrink w-10 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="kecepatan-waktu-detik"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                detik
+              </span>
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center pr-0"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Kecepatan
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="kecepatan-kecepatan"
+              />
+              <select
+                class="w-16 py-0 pl-1 pr-1 text-sm text-gray-900 bg-transparent border-0 dark:placeholder-gray-400 dark:text-white bg-gray-50 dark:bg-gray-700 focus:ring-0 focus:border-blue-500"
+                id="kecepatan-kecepatan-satuan"
+                title="Satuan kecepatan"
+              >
+                <option>km/j</option>
+                <option>m/s</option>
+              </select>
+            </div>
+            <div
+              class="flex px-2.5 pr-0 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span
+                class="h-10 py-2.5 pr-8 text-sm text-gray-900 dark:text-gray-300"
+              >
+                Hitung
+              </span>
+              <div
+                class="grid items-stretch self-stretch grid-flow-row grid-cols-3 py-0 divide-x divide-gray-300 dark:divide-gray-600 grow radio-button"
+                role="radiogroup"
+              >
+                <div
+                  class="inline-flex items-center w-full h-full border-l border-gray-300 dark:border-gray-600"
+                >
+                  <input
+                    type="radio"
+                    id="kecepatan-hitung-kecepatan"
+                    name="hitung"
+                    class="hidden peer"
+                    checked
+                  />
+                  <label
+                    for="kecepatan-hitung-kecepatan"
+                    class="inline-flex items-center w-full h-full text-sm font-medium text-center text-gray-900 bg-transparent hover:bg-gray-100 hover:text-blue-700 peer-checked:z-10 peer-checked:ring-1 peer-checked:ring-blue-500 peer-checked:text-blue-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:peer-checked:bg-gray-600 dark:peer-checked:text-white peer-checked:bg-gray-100"
+                  >
+                    <span class="w-full">Kecepatan</span>
+                  </label>
+                </div>
+
+                <div class="inline-flex items-center w-full h-full">
+                  <input
+                    type="radio"
+                    id="kecepatan-hitung-jarak"
+                    name="hitung"
+                    class="hidden peer"
+                  />
+                  <label
+                    for="kecepatan-hitung-jarak"
+                    class="inline-flex items-center w-full h-full text-sm font-medium text-center text-gray-900 bg-transparent hover:bg-gray-100 hover:text-blue-700 peer-checked:z-10 peer-checked:ring-1 peer-checked:ring-blue-500 peer-checked:text-blue-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:peer-checked:bg-gray-600 dark:peer-checked:text-white peer-checked:bg-gray-100"
+                  >
+                    <span class="w-full">Jarak</span>
+                  </label>
+                </div>
+
+                <div class="inline-flex items-center w-full h-full">
+                  <input
+                    type="radio"
+                    id="kecepatan-hitung-waktu"
+                    name="hitung"
+                    class="hidden peer"
+                  />
+                  <label
+                    for="kecepatan-hitung-waktu"
+                    class="inline-flex items-center w-full h-full text-sm font-medium text-center text-gray-900 bg-transparent hover:bg-gray-100 hover:text-blue-700 peer-checked:z-10 peer-checked:ring-1 peer-checked:ring-blue-500 peer-checked:text-blue-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:peer-checked:bg-gray-600 dark:peer-checked:text-white rounded-r-md peer-checked:bg-gray-100"
+                  >
+                    <span class="w-full">Waktu</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <form class="hidden space-y-4 w-80 percepatan">
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center pr-0"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Kecepatan awal
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="percepatan-kecepatan-awal"
+              />
+              <select
+                class="w-16 py-0 pl-1 pr-1 text-sm text-gray-900 bg-transparent border-0 dark:placeholder-gray-400 dark:text-white bg-gray-50 dark:bg-gray-700 focus:ring-0 focus:border-blue-500"
+                id="percepatan-kecepatan-awal-satuan"
+                title="Satuan kecepatan awal"
+              >
+                <option>m/s</option>
+                <option>km/j</option>
+              </select>
+            </div>
+            <div
+              class="flex py-2 p-2.5 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center pr-0"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Kecepatan akhir
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="percepatan-kecepatan-akhir"
+              />
+              <select
+                class="w-16 py-0 pl-1 pr-1 text-sm text-gray-900 bg-transparent border-0 dark:placeholder-gray-400 dark:text-white bg-gray-50 dark:bg-gray-700 focus:ring-0 focus:border-blue-500"
+                id="percepatan-kecepatan-akhir-satuan"
+                title="Satuan kecepatan akhir"
+              >
+                <option>m/s</option>
+                <option>km/j</option>
+              </select>
+            </div>
+            <div
+              class="flex py-2 p-2.5 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span
+                class="py-0 pr-4 text-sm text-gray-900 grow dark:text-gray-300"
+              >
+                Waktu
+              </span>
+              <input
+                class="flex-shrink w-10 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="percepatan-waktu-jam"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                jam
+              </span>
+              <input
+                class="flex-shrink w-10 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="percepatan-waktu-menit"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                menit
+              </span>
+              <input
+                class="flex-shrink w-10 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="percepatan-waktu-detik"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                detik
+              </span>
+            </div>
+            <div
+              class="flex py-2 p-2.5 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center pr-0"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Percepatan
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="percepatan-percepatan"
+              />
+              <select
+                class="w-16 py-0 pl-1 pr-1 text-sm text-gray-900 bg-transparent border-0 dark:placeholder-gray-400 dark:text-white bg-gray-50 dark:bg-gray-700 focus:ring-0 focus:border-blue-500"
+                id="percepatan-percepatan-satuan"
+                title="Satuan percepatan"
+              >
+                <option>m/s&#xB2;</option>
+                <option>km/j&#xB2;</option>
+              </select>
+            </div>
+          </form>
+          <form class="hidden space-y-4 w-80 rata-rata">
+            <div
+              class="flex px-2.5 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center pr-0"
+            >
+              <span
+                class="self-start h-12 py-3 pr-4 text-sm text-gray-900 dark:text-gray-300"
+              >
+                Data
+              </span>
+              <ul class="flex flex-col self-start grow" id="rata-data">
+                <script>
+                  function rataAddInput() {
+                    if (event.type == "keyup" && event.keyCode != 13) {
+                      return;
+                    }
+                    var template =
+                      document.getElementById("rata-data-template");
+                    var inputList = document.getElementById("rata-data");
+                    var newInput = template.content.cloneNode(true);
+                    newInput.querySelector("input").value =
+                      inputList.querySelector("li:first-of-type input").value;
+                    newInput.querySelector("input").oninput =
+                      halamanRataRata.update;
+                    inputList.querySelector("li:first-of-type input").value =
+                      "";
+                    inputList.appendChild(newInput);
+                  }
+                </script>
+                <li class="inline-flex items-center h-12">
+                  <input
+                    class="h-8 mr-1.5 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="0"
+                    type="number"
+                    min="0"
+                    onkeyup="rataAddInput()"
+                  />
+                  <button
+                    class="px-1 grow border-l dark:border-gray-600 border-gray-300 py-2.5 inline-flex items-center self-stretch text-gray-700 justify-center w-10 bg-transparent hover:bg-gray-100 hover:text-blue-700 active:ring-1 active:ring-blue-500 active:text-blue-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:active:bg-gray-600 dark:active:text-white rounded-r-md active:bg-gray-100"
+                    href="#"
+                    onclick="rataAddInput()"
+                    type="button"
+                    title="Tambah data"
+                  >
+                    <svg
+                      class="w-6 px-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      7
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                  </button>
+                </li>
+                <template id="rata-data-template"
+                  ><li class="inline-flex items-center h-12">
+                    <input
+                      class="h-8 mr-1.5 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                      placeholder="0"
+                      type="number"
+                      min="0"
+                    />
+
+                    <button
+                      class="px-1 grow border-l dark:border-gray-600 border-gray-300 py-2.5 inline-flex items-center self-stretch text-gray-700 justify-center w-10 bg-transparent hover:bg-gray-100 hover:text-red-700 active:ring-1 active:ring-red-500 active:text-red-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:active:bg-gray-600 dark:active:text-white rounded-r-md active:bg-gray-100"
+                      href="#"
+                      onclick="this.parentElement.remove();  halamanRataRata.update()"
+                      type="button"
+                      title="Hapus data"
+                    >
+                      <svg
+                        class="w-6 px-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        7
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M20 12H4"
+                        />
+                      </svg>
+                    </button></li
+                ></template>
+              </ul>
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Banyak data
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="rata-banyak"
+                disabled
+              />
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Rata-rata
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="rata-hasil"
+                disabled
+              />
+            </div>
+          </form>
+          <form class="hidden space-y-4 w-80 simpangan-baku">
+            <div
+              class="flex px-2.5 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center pr-0"
+            >
+              <span
+                class="self-start h-12 py-3 pr-4 text-sm text-gray-900 dark:text-gray-300"
+              >
+                Data
+              </span>
+              <ul
+                class="flex flex-col self-start grow"
+                id="simpangan-baku-data"
+              >
+                <script>
+                  function simpanganBakuAddInput() {
+                    if (event.type == "keyup" && event.keyCode != 13) {
+                      return;
+                    }
+                    var template = document.getElementById(
+                      "simpangan-baku-template"
+                    );
+                    var inputList = document.getElementById(
+                      "simpangan-baku-data"
+                    );
+                    var newInput = template.content.cloneNode(true);
+                    newInput.querySelector("input").value =
+                      inputList.querySelector("li:first-of-type input").value;
+                    newInput.querySelector("input").oninput =
+                      halamanSimpanganBaku.update;
+                    inputList.querySelector("li:first-of-type input").value =
+                      "";
+                    inputList.appendChild(newInput);
+                  }
+                </script>
+                <li class="inline-flex items-center h-12">
+                  <input
+                    class="h-8 mr-1.5 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="0"
+                    type="number"
+                    min="0"
+                    onkeyup="simpanganBakuAddInput()"
+                  />
+                  <button
+                    class="px-1 grow border-l dark:border-gray-600 border-gray-300 py-2.5 inline-flex items-center self-stretch text-gray-700 justify-center w-10 bg-transparent hover:bg-gray-100 hover:text-blue-700 active:ring-1 active:ring-blue-500 active:text-blue-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:active:bg-gray-600 dark:active:text-white rounded-r-md active:bg-gray-100"
+                    href="#"
+                    onclick="simpanganBakuAddInput()"
+                    type="button"
+                    title="Tambah data"
+                  >
+                    <svg
+                      class="w-6 px-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      7
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 4v16m8-8H4"
+                      />
+                    </svg>
+                  </button>
+                </li>
+                <template id="simpangan-baku-template"
+                  ><li class="inline-flex items-center h-12">
+                    <input
+                      class="h-8 mr-1.5 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-600 bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                      placeholder="0"
+                      type="number"
+                      min="0"
+                    />
+
+                    <button
+                      class="px-1 grow border-l dark:border-gray-600 border-gray-300 py-2.5 inline-flex items-center self-stretch text-gray-700 justify-center w-10 bg-transparent hover:bg-gray-100 hover:text-red-700 active:ring-1 active:ring-red-500 active:text-red-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:active:bg-gray-600 dark:active:text-white rounded-r-md active:bg-gray-100"
+                      href="#"
+                      onclick="this.parentElement.remove(); halamanSimpanganBaku.update()"
+                      type="button"
+                      title="Hapus data"
+                    >
+                      <svg
+                        class="w-6 px-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        7
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M20 12H4"
+                        />
+                      </svg>
+                    </button></li
+                ></template>
+              </ul>
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Banyak data
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="simpangan-baku-banyak"
+                disabled
+              />
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Simpangan baku
+              </span>
+
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="simpangan-baku-simpangan"
+                disabled
+              />
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Rata-rata
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="simpangan-baku-rata"
+                disabled
+              />
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Ketidakpastian relatif
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="simpangan-baku-ketidakpastian"
+                disabled
+              />
+              <span class="pl-1 text-lg text-gray-900 dark:text-white">
+                %
+              </span>
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Hasil pengukuran
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="simpangan-baku-hasil"
+                disabled
+              />
+              <span class="pl-1 text-lg text-gray-900 dark:text-white">
+                ±
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 mr-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="simpangan-baku-hasil-ketidakpastian"
+                disabled
+              />
+            </div>
+          </form>
+
+          <div
+            class="p-2 bg-white rounded-lg shadow welcome w-96 min-w-xs dark:bg-gray-700"
+          >
+            <div
+              class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
+            >
+              <h3
+                class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white"
+              >
+                Halo!
+              </h3>
+              <button
+                type="button"
+                class="invisible text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="p-4 space-y-4">
+              <p
+                class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+              >
+                Program ini adalah proyek sumatif dari interdisiplin pelajaran
+                PJOK, Fisika, dan Informatika kelas 10B. Saat ini, program ini
+                dapat menghitung kecepatan, percepatan, rata-rata, dan simpangan
+                baku. Klik tombol di sudut kiri atas untuk mengakses tiap
+                kalkulator.
+              </p>
+              <p
+                class="hidden leading-relaxed text-gray-500 hiddentext-base dark:text-gray-400"
+              >
+                Halaman ini dibuat dengan bahasa HTML, CSS, dan JavaScript,
+                dengan framework TailwindCSS. Sumber dapat dilihat di
+                <a
+                  class="text-blue-500 dark:text-blue-400 hover:underline"
+                  href="https://github.com/chrisg661/10bq3"
+                  >https://github.com/chrisg661/10bq3</a
+                >
+              </p>
+            </div>
+            <div
+              class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
+            >
+              <button
+                type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                onclick="switchContent('kecepatan')"
+              >
+                Oke
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer
+      class="fixed bottom-0 left-0 right-0 flex flex-row items-center justify-between py-4"
+    >
+      <span class="w-full">
+        <p class="text-xs text-center text-gray-500 dark:text-gray-400">
+          Made
+          <!--with &#x2764;-->
+          by Christopher Gijoh - 2022 - 1.0
+        </p>
+      </span>
+    </footer>
+  </body>
+</html>
