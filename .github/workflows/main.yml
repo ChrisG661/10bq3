@@ -39,7 +39,7 @@ jobs:
       - name: Include git hash
         continue-on-error: true
         run: |
-          git rev-parse --short "$GITHUB_SHA" > ./src/build_hash
+          git rev-parse --short "$GITHUB_SHA" > ./dist/build_hash
 
       - name: TailwindCSS dependencies
         run: npm install -D tailwindcss
