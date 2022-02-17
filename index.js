@@ -320,7 +320,13 @@ function halamanSimpanganBaku() {
     }
 
     input.hasil.value = roundFloat(rata).toPrecision(angkaPenting); // Mengatur angka penting
-    input.hasilKetidakpastian.value = roundFloat(simpanganBaku);
+    var desimalHasil =
+      roundFloat(rata).toPrecision(angkaPenting).toString().split(".")[1]
+        .length || 0;
+    input.hasilKetidakpastian.value = roundFloat(
+      simpanganBaku,
+      desimalHasil
+    ).toFixed(desimalHasil);
   }
   halamanSimpanganBaku.update = update;
 }
