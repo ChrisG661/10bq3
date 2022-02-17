@@ -313,16 +313,18 @@ function halamanSimpanganBaku() {
     var angkaPenting = 0;
     if (ketidakpastian > 1) {
       angkaPenting = 2;
-    } else if (ketidakpastian < 1) {
+    } else if (ketidakpastian <= 1) {
       angkaPenting = 3;
     } else if (ketidakpastian <= 0.1) {
       angkaPenting = 4;
     }
 
     input.hasil.value = roundFloat(rata).toPrecision(angkaPenting); // Mengatur angka penting
-    var desimalHasil =
-      roundFloat(rata).toPrecision(angkaPenting).toString().split(".")[1]
-        .length || 0;
+    var desimalHasil = roundFloat(rata)
+      .toPrecision(angkaPenting)
+      .toString()
+      .split(".");
+    desimalHasil = desimalHasil[1] ? desimalHasil.length : 0;
     input.hasilKetidakpastian.value = roundFloat(
       simpanganBaku,
       desimalHasil
