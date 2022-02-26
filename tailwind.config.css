@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.3em;
+  vertical-align: super;
+}
+sub {
+  bottom: -0.25em;
+  vertical-align: sub;
+}
