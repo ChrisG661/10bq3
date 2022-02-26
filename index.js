@@ -1,6 +1,6 @@
 /* 
   2022
-  v1.0
+  v1.1
   Christopher Gijoh
   github.com/chrisg661
   Interdisiplin PJOK, Fisika, Informatika
