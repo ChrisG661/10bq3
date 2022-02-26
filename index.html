@@ -58,8 +58,15 @@
         </button>
         <button
           class="block p-2 text-sm font-medium text-gray-500 rounded-lg dark:target:text-gray-300 target:text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
+          id="bmi"
+          href="#bmi"
+        >
+          BMI
+        </button>
+        <button
+          class="block p-2 text-sm font-medium text-gray-500 rounded-lg dark:target:text-gray-300 target:text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
           id="kalori-berjalan"
-          href="#simpangan-baku"
+          href="#kalori-berjalan"
         >
           Kalori berjalan
         </button>
@@ -803,6 +810,57 @@
               >Sumber rumus</a
             >
           </form>
+          <form class="hidden space-y-4 w-80 bmi">
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Berat badan
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="bmi-berat"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                kg
+              </span>
+            </div>
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                Tinggi badan
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="bmi-tinggi"
+              />
+              <span class="px-1 text-sm text-gray-900 dark:text-white">
+                cm
+              </span>
+            </div>
+
+            <div
+              class="flex p-2.5 py-2 border border-gray-300 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 items-center"
+            >
+              <span class="py-0 pr-4 text-sm text-gray-900 dark:text-gray-300">
+                BMI (Indeks Massa Tubuh)
+              </span>
+              <input
+                class="w-8 h-8 px-1 py-0 text-lg text-right text-gray-900 bg-transparent border-0 border-gray-300 grow focus:border-b bg-gray-50 focus:ring-0 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="0"
+                type="number"
+                min="0"
+                id="bmi-bmi"
+              />
+            </div>
+          </form>
 
           <div
             class="p-2 bg-white rounded-lg shadow welcome w-96 min-w-xs dark:bg-gray-700"
@@ -875,7 +933,7 @@
         <p class="text-xs text-center text-gray-500 dark:text-gray-400">
           Made
           <!--with &#x2764;-->
-          by Christopher Gijoh - 2022 - 1.1
+          by Christopher Gijoh - 2022 - 1.2
         </p>
       </span>
     </footer>

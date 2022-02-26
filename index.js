@@ -1,6 +1,6 @@
 /* 
   2022
-  v1.1
+  v1.2
   Christopher Gijoh
   github.com/chrisg661
   Interdisiplin PJOK, Fisika, Informatika
@@ -417,6 +417,38 @@ function halamanKaloriBerjalan() {
   }
 }
 
+function halamanBMI() {
+  var input = {
+    // Elemen input halaman BMI
+    berat: document.querySelector("form.bmi #bmi-berat"),
+    tinggi: document.querySelector("form.bmi #bmi-tinggi"),
+    bmi: document.querySelector("form.bmi #bmi-bmi"),
+  };
+
+  // Menjalankan fungsi update ketika nilai dimasukkan
+  document.querySelectorAll("form.bmi input").forEach((e) => {
+    e.oninput = update;
+  });
+  document.querySelectorAll("form.bmi select").forEach((e) => {
+    e.onchange = update;
+  });
+
+  function update(e) {
+    // Melakukan perhitungan saat nilai dimasukkan
+    var currentInput = {
+      // Variabel saat update
+      berat: parseFloat(input.berat.value) || 0,
+      tinggi: parseFloat(input.tinggi.value) || 0,
+      bmi: parseFloat(input.bmi.value) || 0,
+    };
+
+    var berat = currentInput.berat;
+    var tinggi = currentInput.tinggi / 100;
+    var bmi = berat / Math.pow(tinggi, 2);
+    input.bmi.value = roundFloat(bmi);
+  }
+}
+
 function roundFloat(num, decimal = 5) {
   // Membulatkan float dengan floating point error
   decimal = Math.pow(10, decimal);
@@ -444,4 +476,5 @@ halamanKecepatan();
 halamanPercepatan();
 halamanRataRata();
 halamanSimpanganBaku();
+halamanBMI();
 halamanKaloriBerjalan();
