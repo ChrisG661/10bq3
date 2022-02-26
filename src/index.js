@@ -1,6 +1,6 @@
 /* 
   2022
-  v1.0
+  v1.1
   Christopher Gijoh
   github.com/chrisg661
   Interdisiplin PJOK, Fisika, Informatika
@@ -333,6 +333,90 @@ function halamanSimpanganBaku() {
   halamanSimpanganBaku.update = update;
 }
 
+function halamanKaloriBerjalan() {
+  var input = {
+    // Elemen input halaman kalori terbakar saat berjalan
+    berat: document.querySelector(
+      "form.kalori-berjalan #kalori-berjalan-berat"
+    ),
+    tinggi: document.querySelector(
+      "form.kalori-berjalan #kalori-berjalan-tinggi"
+    ),
+    jarak: document.querySelector(
+      "form.kalori-berjalan #kalori-berjalan-jarak"
+    ),
+    jarakSatuan: document.querySelector(
+      "form.kalori-berjalan #kalori-berjalan-jarak-satuan"
+    ),
+    waktu: {
+      jam: document.querySelector(
+        "form.kalori-berjalan #kalori-berjalan-waktu-jam"
+      ),
+      menit: document.querySelector(
+        "form.kalori-berjalan #kalori-berjalan-waktu-menit"
+      ),
+      detik: document.querySelector(
+        "form.kalori-berjalan #kalori-berjalan-waktu-detik"
+      ),
+    },
+    kalori: document.querySelector(
+      "form.kalori-berjalan #kalori-berjalan-kalori"
+    ),
+  };
+
+  // Menjalankan fungsi update ketika nilai dimasukkan
+  document.querySelectorAll("form.kalori-berjalan input").forEach((e) => {
+    e.oninput = update;
+  });
+  document.querySelectorAll("form.kalori-berjalan select").forEach((e) => {
+    e.onchange = update;
+  });
+
+  // Sumber: https://www.realsimple.com/health/fitness-exercise/calories-burned-walking
+  //         https://gaya.tempo.co/read/859419/begini-menghitung-kalori-terbakar-saat-jalan-kaki/full&view=ok
+  // Kcals burned per minute = (0.035 * body weight in kilograms) + ((Velocity in m/s^2)/Height in meter))*(0.029)*(body weight in kilograms)
+
+  function update(e) {
+    // Melakukan perhitungan saat nilai dimasukkan
+    var currentInput = {
+      // Variabel saat update
+      berat: parseFloat(input.berat.value) || 0,
+      tinggi: parseFloat(input.tinggi.value) || 0,
+      jarak: parseFloat(input.jarak.value) || 0,
+      jarakSatuan: input.jarakSatuan.value,
+      waktu: {
+        jam: parseFloat(input.waktu.jam.value) || 0,
+        menit: parseFloat(input.waktu.menit.value) || 0,
+        detik: parseFloat(input.waktu.detik.value) || 0,
+      },
+      kalori: parseFloat(input.kalori.value) || 0,
+    };
+
+    var berat = currentInput.berat;
+    var tinggi = currentInput.tinggi / 100;
+
+    // Menghitung kecepatan
+    var d = currentInput.jarak;
+    if (currentInput.jarakSatuan == "km") {
+      d = d * 1000;
+    }
+    var t = waktuDetik(currentInput.waktu);
+    ({
+      jam: input.waktu.jam.value,
+      menit: input.waktu.menit.value,
+      detik: input.waktu.detik.value,
+    } = waktuFormat(t));
+    var kecepatan = d / t;
+
+    // Menghitung kalori terbakar tiap menit
+    var kaloriMenit =
+      0.035 * berat + (Math.pow(kecepatan, 2) / tinggi) * 0.029 * berat; // kalori terbakar per menit
+    // Menghitung kalori terbakar total (dikali waktu)
+    var kalori = kaloriMenit * (t / 60);
+    input.kalori.value = roundFloat(kalori);
+  }
+}
+
 function roundFloat(num, decimal = 5) {
   // Membulatkan float dengan floating point error
   decimal = Math.pow(10, decimal);
@@ -360,3 +444,4 @@ halamanKecepatan();
 halamanPercepatan();
 halamanRataRata();
 halamanSimpanganBaku();
+halamanKaloriBerjalan();
